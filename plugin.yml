@@ -1,0 +1,31 @@
+name: MyClasses
+author: magicced01
+version: 1.0
+
+main: de.magicced01.myclasses.MyClasses
+
+commands:
+  classes:
+    description: Allgemeiner Befehl
+    usage : /classes <list/[classname]>
+  classarena:
+    description: Arena-Befehle
+    usage: /classarena <setspawn/join/leave>
+
+    
+permissions:
+  myclasses.*:
+    description: Grants access to all MyClasses Commands
+    children:
+      myclasses.setspawn: true
+      myclasses.join: true
+      myclasses.leave: true
+  myclasses.setspawn:
+    description: Allows to set the Arenaspawn
+    default: false
+  myclasses.join:
+    description: Allow to join the Arena
+    default: false
+  myclasses.leave:
+    description: Allow to leave the Arena
+    default: false
