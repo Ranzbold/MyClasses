@@ -23,13 +23,11 @@ public class Listener_Game implements Listener {
 		Player killed = e.getEntity();
 		e.setKeepInventory(true);
 		if (GameManager.isInArena(e.getEntity())) {
-			if(e.getEntity().getKiller() instanceof Player) {
-				Player killer = (Player)e.getEntity().getKiller();
+			if (e.getEntity().getKiller() instanceof Player) {
+				Player killer = (Player) e.getEntity().getKiller();
 				GameManager.calculateDeath(killer, killed);
 
-
-			}
-			else {
+			} else {
 				StatsManager.addDeaths(killed, 1);
 				ScoreBoardUtils.updateScoreboard(killed);
 
@@ -48,22 +46,20 @@ public class Listener_Game implements Listener {
 			e.setCancelled(true);
 		}
 	}
+
 	@EventHandler
-	public void onPlayerDropItem(PlayerDropItemEvent e)
-	{
-		if (GameManager.isInArena(e.getPlayer()));	
-		{
+	public void onPlayerDropItem(PlayerDropItemEvent e) {
+		if (GameManager.isInArena(e.getPlayer())) {
 			e.setCancelled(true);
 		}
 
 	}
+
 	@EventHandler
-	public void onItemPickUp(EntityPickupItemEvent e)
-	{
-		if(e.getEntity() instanceof Player) {
-			Player p = (Player)e.getEntity();
-			if (GameManager.isInArena(p));			;
-			{
+	public void onItemPickUp(EntityPickupItemEvent e) {
+		if (e.getEntity() instanceof Player) {
+			Player p = (Player) e.getEntity();
+			if (GameManager.isInArena(p)) {
 				e.setCancelled(true);
 			}
 		}
@@ -71,16 +67,15 @@ public class Listener_Game implements Listener {
 
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		if (GameManager.isInArena(e.getPlayer()));			;
-		{
+		if (GameManager.isInArena(e.getPlayer())) {
 			e.getPlayer().sendMessage(Messages.NO_BREAK.description);
 			e.setCancelled(true);
 		}
+
 	}
 
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if (GameManager.isInArena(e.getPlayer()));			;
-		{
+		if (GameManager.isInArena(e.getPlayer())) {
 			e.getPlayer().sendMessage(Messages.NO_PLACE.description);
 			e.setCancelled(true);
 		}
@@ -97,7 +92,5 @@ public class Listener_Game implements Listener {
 			e.setRespawnLocation(spawn);
 		}
 	}
-	
-
 
 }

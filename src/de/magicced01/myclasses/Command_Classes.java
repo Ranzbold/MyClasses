@@ -29,6 +29,7 @@ public class Command_Classes implements CommandExecutor {
 				p.sendMessage(Messages.PREFIX.description + "Aktuell verfügbare Klassen:");
 				p.sendMessage("§9Scout");
 				p.sendMessage("§9Tank");
+				return true;
 			}
 			String classstring = args[0];
 			if (classstring.equals("scout")) {

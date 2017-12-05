@@ -8,10 +8,11 @@ commands:
   classes:
     description: Allgemeiner Befehl
     usage : /classes <list/[classname]>
+    aliases: [class, myclasses]
   classarena:
     description: Arena-Befehle
-    usage: /classarena <setspawn/join/leave>
-
+    usage: /classarena [setspawn [blue|red] [join] [leave]
+    aliases: [ca]
     
 permissions:
   myclasses.*:
