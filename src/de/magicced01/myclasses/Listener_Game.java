@@ -1,5 +1,6 @@
 package de.magicced01.myclasses;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -11,7 +12,11 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand;
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand.EnumClientCommand;
@@ -90,6 +95,39 @@ public class Listener_Game implements Listener {
 			GameManager.allocateClass(p, pclass);
 			Location spawn = GameManager.getSpawn(GameManager.getTeam(e.getPlayer()));
 			e.setRespawnLocation(spawn);
+		}
+	}
+
+	@EventHandler
+	public void onGameModeChange(PlayerGameModeChangeEvent e) {
+		if (GameManager.isInArena(e.getPlayer())) {
+			e.getPlayer()
+					.sendMessage(Messages.PREFIX.description + " Du darfst den Spielmodus nicht in der Arena ändern");
+			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onTeleport(PlayerTeleportEvent e) {
+		if (!(e.getCause() == TeleportCause.PLUGIN)) {
+			e.getPlayer().sendMessage(Messages.PREFIX.description + "Du darfst dich nicht in der Arena teleportieren");
+			e.setCancelled(true);
+
+		}
+	}
+	@EventHandler
+	public void onItemPickUp1(EntityPickupItemEvent e) {
+		if(e.getEntity() instanceof Player) {
+			Player p = (Player)e.getEntity();
+			if(GameManager.isInArena(p)) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	@EventHandler
+	public void onItemDrop(PlayerDropItemEvent e) {
+		if(GameManager.isInArena(e.getPlayer())) {
+			e.setCancelled(true);
 		}
 	}
 

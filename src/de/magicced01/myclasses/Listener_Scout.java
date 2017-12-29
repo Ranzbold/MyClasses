@@ -23,18 +23,21 @@ public class Listener_Scout implements Listener {
 					Player victim = (Player)e.getEntity();
 					if(shooter.getLocation().distance(victim.getLocation()) >= 25)
 					{
-						arrow.setKnockbackStrength(0);
-						shooter.playSound(shooter.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);
-						shooter.sendMessage("Du hast " + victim.getName() + " mit einem Kopfschuss getötet!");
-						victim.sendMessage("Du wurdest von " + shooter.getName() + " mit einem Kopfschuss getötet!");
-						GameManager.allocateClass(victim, GameManager.PlayerClassCache.get(victim.getName()));
-						GameManager.calculateDeath(shooter, victim);
-						victim.setHealth(victim.getMaxHealth());
-						e.setDamage(0);
-						Location spawn = GameManager.getSpawn(GameManager.getTeam(victim));
-						victim.setVelocity(new Vector(0,0,0));
-						victim.teleport(spawn);
-
+						Teams victimteam = GameManager.getTeam(victim);
+						Teams shooterteam = GameManager.getTeam(shooter);
+						if(!(shooterteam == victimteam)) {
+							arrow.setKnockbackStrength(0);
+							shooter.playSound(shooter.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1, 1);
+							shooter.sendMessage("Du hast " + victim.getName() + " mit einem Kopfschuss getötet!");
+							victim.sendMessage("Du wurdest von " + shooter.getName() + " mit einem Kopfschuss getötet!");
+							GameManager.allocateClass(victim, GameManager.PlayerClassCache.get(victim.getName()));
+							GameManager.calculateDeath(shooter, victim);
+							victim.setHealth(victim.getMaxHealth());
+							e.setDamage(0);
+							Location spawn = GameManager.getSpawn(GameManager.getTeam(victim));
+							victim.setVelocity(new Vector(0,0,0));
+							victim.teleport(spawn);
+						}
 					}
 					else
 					{

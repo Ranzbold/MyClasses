@@ -5,16 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 
 
 public class GameManager {
 	public static HashMap<String, String> PlayerClassCache = new HashMap<String, String>();
+	public static HashMap<String, IPlayer> IPlayerCache = new HashMap<String, IPlayer>();
 	public static HashMap<String, ItemStack[]> InventoryCache = new HashMap<String, ItemStack[]>();
 	public static HashMap<String, ItemStack[]> ArmorCache = new HashMap<String, ItemStack[]>();
 	public static HashMap<String, Location> LocationCache = new HashMap<String, Location>();
@@ -153,31 +156,14 @@ public class GameManager {
 	}
 
 	public static void saveData(Player p) {
-		ItemStack[] inv = p.getInventory().getContents();
-		ItemStack[] armorcontents = p.getInventory().getArmorContents();
-		Location loc = p.getLocation();
-		if (InventoryCache.containsKey(p.getName())) {
-			InventoryCache.remove(p.getName());
-		}
-		InventoryCache.put(p.getName(), inv);
-		if (ArmorCache.containsKey(p.getName())) {
-			ArmorCache.remove(p.getName());
-		}
-		ArmorCache.put(p.getName(), armorcontents);
-		if (LocationCache.containsKey(p.getName())) {
-			LocationCache.remove(p.getName());
-		}
-		LocationCache.put(p.getName(), loc);
+		IPlayer pdata = new IPlayer(p);
+		IPlayerCache.put(p.getName(), pdata);
 	}
 
 	public static void loadData(Player p) {
-		ItemStack[] inv = InventoryCache.get(p.getName());
-		ItemStack[] armorcontents = ArmorCache.get(p.getName());
-		Location loc = LocationCache.get(p.getName());
-		p.getInventory().clear();
-		p.getInventory().setContents(inv);
-		p.getInventory().setArmorContents(armorcontents);
-		p.teleport(loc);
+		IPlayer pdata = IPlayerCache.get(p.getName());
+		IPlayerCache.remove(p.getName());
+		pdata.restoreData();
 	}
 
 	public static void chooseClass(Player p, Classes cl) {

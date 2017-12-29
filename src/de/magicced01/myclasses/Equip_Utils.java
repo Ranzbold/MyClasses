@@ -45,7 +45,7 @@ public class Equip_Utils {
 		meta.setDisplayName("§4Bone Crusher");
 		item.setItemMeta(meta);
 		item.addEnchantment(ench1, enchlevelarcher1);
-		item.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 5);
+		item.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 		p.getInventory().addItem(new ItemStack[] { sword });
 		p.getInventory().addItem(new ItemStack[] { item });
 		p.getInventory().addItem(new ItemStack[] { arrows });
@@ -120,7 +120,7 @@ public class Equip_Utils {
 
 	}
 
-	public void pyro(Player p) {
+	public static void pyro(Player p) {
 		respawnPlayer(p);
 		ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
 		ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -132,6 +132,9 @@ public class Equip_Utils {
 		metabow.setDisplayName("§6§lUrziel der Brecher");
 		bow.setItemMeta(metabow);
 
+	}
+	public static void ninja(Player p) {
+		
 	}
 
 }
